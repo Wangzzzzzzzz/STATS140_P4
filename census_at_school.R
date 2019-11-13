@@ -339,6 +339,35 @@ Data_Cleaning_Flag[["Importance_reducing_pollution_flag"]] = Importance_reducing
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Importance_owning_computer
+Importance_owning_computer = as.numeric(data$Importance_owning_computer)
+summary(Importance_owning_computer)
+#flag
+Importance_owning_computer_flag = rep_len(0L, length.out=length(Importance_owning_computer))
+#set all value out of range (0-1000) to have flag 1
+Importance_owning_computer_flag[which(Importance_owning_computer<0 | Importance_owning_computer>1000 | is.na(Importance_owning_computer))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_owning_computer[which(Importance_owning_computer<0 | Importance_owning_computer>1000 | is.na(Importance_owning_computer))] = NA
+
+Data_Cleaning_Flag[["Importance_owning_computer"]] = Importance_owning_computer
+Data_Cleaning_Flag[["Importance_owning_computer_flag"]] = Importance_owning_computer_flag
+
+
 #Importance_reducing_pollution,
 #Importance_recycling_rubbish,
 #Importance_conserving_water,
