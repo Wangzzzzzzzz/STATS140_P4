@@ -414,5 +414,5 @@ Data_Cleaning_Flag[["Importance_internet_access"]] = Importance_internet_access
 Data_Cleaning_Flag[["Importance_internet_access_flag"]] = Importance_internet_access_flag
 
 
-## output our Data_Cleaning_Flag！！！！Yeaaaaaa！！！！
-Data_Cleaning_Flag
+## output our Data_Cleaning_Flag????????????Yeaaaaaa????????????
+Cleaned_Set = data.frame(Data_Cleaning_Flag); View(Cleaned_Set)
