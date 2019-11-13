@@ -189,7 +189,8 @@ ggplot(data=NULL,aes(x=height,y=armspan)) + geom_point(alpha=0.1) + labs(title =
 Data_Cleaning_Flag[["Height_cm_clean"]] = height
 Data_Cleaning_Flag[["Armspan_cm_clean"]] = armspan
 
-## Footlength_cm
+
+## for Footlength_cm
 # Footlength_cm is actually character type in the excel so we first transform into numeric
 # NA would introduced by coercion and we would deal with it later.
 num_Footlength_cm = as.numeric(data$Footlength_cm)
@@ -205,3 +206,21 @@ Right_Footlength_cm[which(num_Footlength_cm>9 & num_Footlength_cm<=40)] = num_Fo
 Data_Cleaning_Flag[["Right_Footlength_cm"]] = Right_Footlength_cm
 
 
+## for Languages_spoken
+typeof(data$Languages_spoken)
+num_Languages_spoken = as.numeric(data$Languages_spoken)
+summary(num_Languages_spoken)
+# flag...
+Languages_spoken_flag = rep_len(0L, length.out=length(num_Languages_spoken))
+# Data larger than 30 are least possible and we flag them as 2.
+Languages_spoken_flag[num_Languages_spoken>30] = 2L
+# Flag the data in the range (12, 30] as 1.
+Languages_spoken_flag[(num_Languages_spoken>12) & (num_Languages_spoken<=30)] = 1L
+
+# clean our data
+Languages_spoken = rep(NA, length(num_Languages_spoken))
+# only choose from 1 to 30 maximum, other should be bad variables and set them into NA
+Languages_spoken[which((num_Languages_spoken>=1) & (num_Languages_spoken<=30))] = num_Languages_spoken[which((num_Languages_spoken>=1) & (num_Languages_spoken<=30))]
+
+Data_Cleaning_Flag[["Languages_spoken"]] = Languages_spoken
+Data_Cleaning_Flag[["Languages_spoken_flag"]] = Languages_spoken_flag
