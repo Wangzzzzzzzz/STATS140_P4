@@ -189,5 +189,19 @@ ggplot(data=NULL,aes(x=height,y=armspan)) + geom_point(alpha=0.1) + labs(title =
 Data_Cleaning_Flag[["Height_cm_clean"]] = height
 Data_Cleaning_Flag[["Armspan_cm_clean"]] = armspan
 
+## Footlength_cm
+# Footlength_cm is actually character type in the excel so we first transform into numeric
+# NA would introduced by coercion and we would deal with it later.
+num_Footlength_cm = as.numeric(data$Footlength_cm)
+summary(num_Footlength_cm)
+num_Footlength_cm_flag = rep_len(0L, length.out=length(num_Footlength_cm))
+Right_Footlength_cm = rep(NA, length(num_Footlength_cm))
+# apply the tranformation of units indicated in the pdf
+Right_Footlength_cm[which(num_Footlength_cm>=0.09 & num_Footlength_cm<=0.4)] = 100 * num_Footlength_cm[which(num_Footlength_cm>=0.09 & num_Footlength_cm<=0.4)]
+Right_Footlength_cm[which(num_Footlength_cm>=0.4 & num_Footlength_cm<=1.31)] = 30.48 * num_Footlength_cm[which(num_Footlength_cm>=0.4 & num_Footlength_cm<=1.31)]
+Right_Footlength_cm[which(num_Footlength_cm>=3.5 & num_Footlength_cm<=9)] = 2.54 * num_Footlength_cm[which(num_Footlength_cm>=3.5 & num_Footlength_cm<=9)]
+Right_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)] = 0.1 * num_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)]
+Right_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)] = num_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)]
+Data_Cleaning_Flag[["Right_Footlength_cm"]] = Right_Footlength_cm
 
 
