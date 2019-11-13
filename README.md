@@ -13,7 +13,6 @@ which i didn't do as i don't have other two's infos, let's see if we need to do 
 
 | Name | Type | Possible ways to clean |
 | ---- | ---- | -------- |
-| Reaction_time | Numeric | ??????? |
 | Score_in_memory_game | Numeric | ??????? |
 | Favourite_physical_activity | Categoric | set everything out of range to have flag 1 |
 | Importance_reducing_pollution | Numeric range | set all value out of range (0-1000) to have flag 1 |
