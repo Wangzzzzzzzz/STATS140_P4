@@ -190,6 +190,7 @@ Data_Cleaning_Flag[["Height_cm_clean"]] = height
 Data_Cleaning_Flag[["Armspan_cm_clean"]] = armspan
 
 
+
 ## for Footlength_cm
 # Footlength_cm is actually character type in the excel so we first transform into numeric
 # NA would introduced by coercion and we would deal with it later.
@@ -204,6 +205,7 @@ Right_Footlength_cm[which(num_Footlength_cm>=3.5 & num_Footlength_cm<=9)] = 2.54
 Right_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)] = 0.1 * num_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)]
 Right_Footlength_cm[which(num_Footlength_cm>9 & num_Footlength_cm<=40)] = num_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)]
 Data_Cleaning_Flag[["Right_Footlength_cm"]] = Right_Footlength_cm
+
 
 
 ## for Languages_spoken
@@ -224,3 +226,22 @@ Languages_spoken[which((num_Languages_spoken>=1) & (num_Languages_spoken<=30))] 
 
 Data_Cleaning_Flag[["Languages_spoken"]] = Languages_spoken
 Data_Cleaning_Flag[["Languages_spoken_flag"]] = Languages_spoken_flag
+
+
+
+## for Travel to school
+summary.factor(data$Travel_to_school)
+# set everything out of range to have flag 1
+Travel_to_school_flag = rep_len(0L, length.out=length(data$Travel_to_school))
+Travel_to_school_flag[which(data$Travel_to_school!='Car' & data$Travel_to_school!='Bicycle' & data$Travel_to_school!='Boat' & data$Travel_to_school!='Bus' & data$Travel_to_school!='Rail (Train/Tram/Subway)' & data$Travel_to_school!='Skateboard/Scooter/Rollerblade' & data$Travel_to_school!='Walk' & data$Travel_to_school!='Other')] = 1L
+Travel_to_school_flag[is.na(data$Travel_to_school)] = 1L
+#set everything out of range to NA
+Travel_to_school = data$Travel_to_school
+Travel_to_school[which(data$Travel_to_school!='Car' & data$Travel_to_school!='Bicycle' & data$Travel_to_school!='Boat' & data$Travel_to_school!='Bus' & data$Travel_to_school!='Rail (Train/Tram/Subway)' & data$Travel_to_school!='Skateboard/Scooter/Rollerblade' & data$Travel_to_school!='Walk' & data$Travel_to_school!='Other')] = NA
+
+Data_Cleaning_Flag[["Travel_to_school"]] = Travel_to_school
+Data_Cleaning_Flag[["Travel_to_school_flag"]] = Travel_to_school_flag
+
+
+
+
