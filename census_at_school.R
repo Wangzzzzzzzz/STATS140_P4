@@ -286,4 +286,17 @@ Data_Cleaning_Flag[["Reaction_time_flag"]] = Reaction_time_flag
 
 
 
+## for Score in memory game
+Score_in_memory_game = as.numeric(data$Score_in_memory_game)
+summary(Score_in_memory_game)
+# Flag
+Score_in_memory_game_flag = rep_len(0L, length.out=length(Score_in_memory_game))
+# Range is [2.02, 96], flag the data in this range and NAs as 0
+# Smaller than 2.02 or larger than 96 are very extreme outliers and we flag them as 2
+Score_in_memory_game_flag[which(Score_in_memory_game<2.02 | Score_in_memory_game>96)] = 2L
+# clean
+# 2.02 seconds as the smallest possible value
+Score_in_memory_game[which(Score_in_memory_game<2.02 | Score_in_memory_game>96)] = NA
 
+Data_Cleaning_Flag[["Score_in_memory_game"]] = Score_in_memory_game
+Data_Cleaning_Flag[["Score_in_memory_game_flag"]] = Score_in_memory_game_flag
