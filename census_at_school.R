@@ -301,6 +301,28 @@ Score_in_memory_game[which(Score_in_memory_game<2.02 | Score_in_memory_game>96)]
 Data_Cleaning_Flag[["Score_in_memory_game"]] = Score_in_memory_game
 Data_Cleaning_Flag[["Score_in_memory_game_flag"]] = Score_in_memory_game_flag
 
+
+
+## Favourite_physical_activity
+summary.factor(data$Favourite_physical_activity)
+# from this we can see that the good values should be among, "Athletics, Baseball/Softball, Basketball, Bowling, 
+# Cycling, Dancing, Football (American), Golf, Gymnastics, Hockey (Field), Hockey (Ice), Lacrosse, Martial Arts, Other
+# Rowing, Running/Jogging, Skateboarding/Rollerblading, Soccer, Swimming, Table Tennis, Tennis, Walking/Hiking"
+# So we would flag all the nones and NAs into flag 1 and clean them as NAs.
+Favourite_physical_activity = data$Favourite_physical_activity
+#flag
+Favourite_physical_activity_flag = rep_len(0L, length.out=length(Favourite_physical_activity))
+# if None or NA, flag as 1
+Favourite_physical_activity_flag[which(Favourite_physical_activity=='None' | is.na(Favourite_physical_activity))] = 1L
+#clean data
+Favourite_physical_activity[which(Favourite_physical_activity=='None' | is.na(Favourite_physical_activity))] = NA
+
+Data_Cleaning_Flag[["Favourite_physical_activity"]] = Favourite_physical_activity
+Data_Cleaning_Flag[["Favourite_physical_activity_flag"]] = Favourite_physical_activity_flag
+
+
+
+
 #Importance_reducing_pollution,
 #Importance_recycling_rubbish,
 #Importance_conserving_water,
