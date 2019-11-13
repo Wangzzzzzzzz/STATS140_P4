@@ -1,12 +1,18 @@
 ## STATS 140SL Project 4
 
 Census at school data cleaning
+***question:
+for footlength_cm, in pdf it says:"4. Since the ratio of right foot length to left foot length should be around 1 for
+human. For the NAs in the modified Right Footlength cm variable, we replace them
+with their corresponding left foot length. Similarly, we use the right footlength value
+to replace the NAs in the variable Left Footlength cm.
+5. Modify the Longer foot based on the ratio of right footlength to left footlength.(e.g.ratio>1—Longer foot = Right foot)"
+which i didn't do as i don't have other two's infos, let's see if we need to do that.
 
 ## Variables Left:
 
 | Name | Type | Possible ways to clean |
 | ---- | ---- | -------- |
-| Footlength_cm | Numeric | ??????? |
 | Languages_spoken | Numeric | ??????? |
 | Travel_to_school | Categoric | set everything out of range to have flag 1 |
 | Travel_time_to_school | Numeric | ??????? |
