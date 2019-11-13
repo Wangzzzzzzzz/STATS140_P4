@@ -2,6 +2,7 @@ suppressWarnings(suppressPackageStartupMessages({
   library(readxl)
   library(ggplot2)
   library(dplyr)
+  library(MASS)
 }))
 # read in the data 
 data = read_excel("Desktop/140_proj_4/project_4.xlsx")
@@ -129,8 +130,7 @@ summary(Age)
 # We also take any ages that is above 5 years larger than the median age of a
 # perticular grade to be a not-so-obvious problem, as it is unlikely for people to be able to 
 # get to a grad 5 years younger or older than others
-Age_grade_median = (data %>% 
-                      select(Age_years, ClassGrade) %>%
+Age_grade_median = (data %>% dplyr::select(Age_years, ClassGrade) %>%
                       group_by(ClassGrade) %>%
                       mutate(Median_Age = median(as.numeric(Age_years),na.rm=TRUE)))$Median_Age
 Age_flag = ifelse((Age >= 28 | Age <= 5) & !is.na(Age), 1L, 
@@ -149,4 +149,45 @@ Data_Cleaning_Flag[["Handed"]] = data$Handed
 Data_Cleaning_Flag[["Handed_flag"]] = Handed_flag
 
 
-## Height
+## Height & Armspan
+# Our group think that what was done by the group whose work is on CCLE is pretty much complete
+# Thus, we use the same logic as they did. We removed some unnecessary steps.
+# for Height
+height = data$Height_cm
+suppressWarnings({
+  height = as.numeric(height)
+})
+height[height<0.95] = NA
+height[which(height<=2.35)] = 100*(height[which(height<2.35)])   #m-cm
+height[which(height>2.35&height<3.1)] = NA
+height[which(height>=3.1&height<=7.7)] = 30.48*(height[which(height>=3.1&height<=7.7)])  #foot-cm
+height[which(height>7.7&height<37.4)] = NA
+height[which(height>=37.4&height<=92.5)] = 2.54*(height[which(height>=37.4&height<=92.5)])  #inch-cm
+height[which(height>92.5&height<95)] = NA
+height[which(height>235&height<950)] = NA
+height[which(height>=950&height<=2350)] = 0.1*(height[which(height<=2350&height>=950)])   #mm-cm
+height[which(height>2350)] = NA
+
+# for Armspan
+suppressWarnings({
+  armspan = as.numeric(data$Armspan_cm)
+})
+armspan[armspan<0.95] = NA
+armspan[which(armspan<=2.35)] = 100*(armspan[which(armspan<2.35)])   #m-cm
+armspan[which(armspan>2.35&armspan<3.1)] = NA
+armspan[which(armspan>=3.1&armspan<=7.7)] = 30.48*(armspan[which(armspan>=3.1&armspan<=7.7)])  #foot-cm
+armspan[which(armspan>7.7&armspan<37.4)] = NA
+armspan[which(armspan>=37.4&armspan<=92.5)] = 2.54*(armspan[which(armspan>=37.4&armspan<=92.5)])  #inch-cm
+armspan[which(armspan>92.5&armspan<95)] = NA
+armspan[which(armspan>235&armspan<950)] = NA
+armspan[which(armspan>=950&armspan<=2350)] = 0.1*(armspan[which(armspan<=2350&armspan>=950)])   #mm-cm
+armspan[which(armspan>2350)] = NA
+
+# We decided that we will not use armspan to fill height and use height to fill armspan
+# since based on the following plot, they do not have to be equal
+ggplot(data=NULL,aes(x=height,y=armspan)) + geom_point(alpha=0.1) + labs(title = "Height vs. Armspan Plot")
+Data_Cleaning_Flag[["Height_cm_clean"]] = height
+Data_Cleaning_Flag[["Armspan_cm_clean"]] = armspan
+
+
+
