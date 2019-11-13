@@ -34,7 +34,7 @@ Data_Cleaning_Flag[["ResponseID_flag"]] = ResponseID_flag
 ## Cleaning of ClassID
 # from summary we know that there in no NA's of the Class ID
 summary(data$ClassID)
-# Since there is no specific rule to exmain ClassID column, all the data
+# Since there is no specific rule to examine ClassID column, all the data
 # are considered to be valid
 ClassID_flag = as.integer(rep_len(0,length.out = length(data$ClassID)))
 Data_Cleaning_Flag[["ClassID"]] = data$ClassID
