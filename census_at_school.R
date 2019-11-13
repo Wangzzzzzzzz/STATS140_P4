@@ -201,7 +201,7 @@ Right_Footlength_cm[which(num_Footlength_cm>=0.09 & num_Footlength_cm<=0.4)] = 1
 Right_Footlength_cm[which(num_Footlength_cm>=0.4 & num_Footlength_cm<=1.31)] = 30.48 * num_Footlength_cm[which(num_Footlength_cm>=0.4 & num_Footlength_cm<=1.31)]
 Right_Footlength_cm[which(num_Footlength_cm>=3.5 & num_Footlength_cm<=9)] = 2.54 * num_Footlength_cm[which(num_Footlength_cm>=3.5 & num_Footlength_cm<=9)]
 Right_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)] = 0.1 * num_Footlength_cm[which(num_Footlength_cm>=90 & num_Footlength_cm<=400)]
-Right_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)] = num_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)]
+Right_Footlength_cm[which(num_Footlength_cm>9 & num_Footlength_cm<=40)] = num_Footlength_cm[which(num_Footlength_cm>=9 & num_Footlength_cm<=40)]
 Data_Cleaning_Flag[["Right_Footlength_cm"]] = Right_Footlength_cm
 
 
