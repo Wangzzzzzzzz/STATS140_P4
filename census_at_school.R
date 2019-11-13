@@ -266,4 +266,24 @@ Data_Cleaning_Flag[["Travel_time_to_school_flag"]] = Travel_time_to_school_flag
 
 
 
+## for Reaction_time
+# 0.101 seconds as the smallest possible value
+Reaction_time = as.numeric(data$Reaction_time)
+summary(Reaction_time)
+# flag
+Reaction_time_flag = rep_len(0L, length.out=length(Reaction_time))
+# reasonable range is [0.101, 1.21], e flag the data in this range and NAs as 0
+Reaction_time_flag[which(Reaction_time>=0.101 & Reaction_time<=1.21)] = 0L
+# a smaller than 0.101 or larger than 1.21 are very extreme outliers and we flag them as 2
+Reaction_time_flag[which(Reaction_time<0.101)] = 2L
+Reaction_time_flag[which(Reaction_time> 1.21)] = 2L
+# clean, set less than 0.101 or larger than 1.21 to NA
+Reaction_time[which(Reaction_time<0.101)] = NA
+Reaction_time[which(Reaction_time> 1.21)] = NA
+
+Data_Cleaning_Flag[["Reaction_time"]] = Reaction_time
+Data_Cleaning_Flag[["Reaction_time_flag"]] = Reaction_time_flag
+
+
+
 
