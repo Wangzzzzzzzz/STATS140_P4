@@ -6,7 +6,7 @@ Census at school data cleaning
 
 | Name | Type | Possible ways to clean |
 | ---- | ---- | -------- |
-| Footlength_cm | Numeric | $\blackbox\blackbox\blackbox$ |
+| Footlength_cm | Numeric | ??????? |
 | Languages_spoken | Numeric | ??????? |
 | Travel_to_school | Categoric | set everything out of range to have flag 1 |
 | Travel_time_to_school | Numeric | ??????? |
