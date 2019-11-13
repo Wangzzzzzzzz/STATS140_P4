@@ -1,6 +1,7 @@
 suppressWarnings(suppressPackageStartupMessages({
   library(readxl)
   library(ggplot2)
+  library(dplyr)
 }))
 # read in the data 
 data = read_excel("Desktop/140_proj_4/project_4.xlsx")
@@ -100,4 +101,40 @@ Data_Cleaning_Flag[["Region_flag"]] = Region_flag
 
 ## Cleaning of Gender
 table(data$Gender, useNA="always")
-# since there is 
+# since there is only two choices (male/female), we would be taking
+# anything outside this as obvious problem (flag = 1)
+# For NA's, we will flag them 0
+Gender_flag = rep_len(0L, length.out=length(data$Gender))
+Gender_flag[(!is.na(data$Gender)) & data$Gender!="Male" & data$Gender!="Female"] = 1L
+Data_Cleaning_Flag[["Gender"]] = data$Gender
+Data_Cleaning_Flag[["Gender_flag"]] = Gender_flag
+
+
+## Cleaning of Age_years
+# first we will make a copy of the vector and turn it into number
+# anything that cannot be turn into number correctly will be an obvious problem
+# in this case, it turns out that there is no such case
+suppressWarnings({
+  Age = as.numeric(data$Age_years)
+})
+# find those become NA due to coercion
+coercion_flag = ifelse((is.na(Age) & (!is.na(data$Age_years))),1,0)
+sum(coercion_flag)
+# get the summary of the Age
+summary(Age)
+# We can see that there are negative ages and also ages greater than 1000,
+# which are obviously wrong. Thus, based on common sense, we will rule out
+# all age below 5 (as one can only go to school after 6) and above 28 to be
+# obviously wrong (10 years older than usual age of the 12th grade)
+# We also take any ages that is above 5 years larger than the median age of a
+# perticular grade to be a problem, as it is unlikely for people to be able to 
+# get to a grad 5 years younger or older than others
+Age_grade_median = (data %>% 
+                      select(Age_years, ClassGrade) %>%
+                      group_by(ClassGrade) %>%
+                      mutate(Median_Age = median(as.numeric(Age_years),na.rm=TRUE)))$Median_Age
+Age_flag = ifelse((Age >= 28 | Age <= 5) & !is.na(Age), 1L, 
+                  ifelse(abs(Age-Age_grade_median) > 5 & !is.na(Age-Age_grade_median),2L,0L))
+Data_Cleaning_Flag[["Age_years"]] = data$Age_years
+Data_Cleaning_Flag[["Age_flag"]] = Age_flag
+
