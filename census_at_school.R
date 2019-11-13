@@ -368,6 +368,24 @@ Data_Cleaning_Flag[["Importance_owning_computer"]] = Importance_owning_computer
 Data_Cleaning_Flag[["Importance_owning_computer_flag"]] = Importance_owning_computer_flag
 
 
+## Importance_internet_access
+Importance_internet_access = as.numeric(data$Importance_internet_access)
+summary(Importance_internet_access)
+#flag
+Importance_internet_access_flag = rep_len(0L, length.out=length(Importance_internet_access))
+#set all value out of range (0-1000) to have flag 1
+Importance_internet_access_flag[which(Importance_internet_access<0 | Importance_internet_access>1000 | is.na(Importance_internet_access))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_internet_access[which(Importance_internet_access<0 | Importance_internet_access>1000 | is.na(Importance_internet_access))] = NA
+
+Data_Cleaning_Flag[["Importance_internet_access"]] = Importance_internet_access
+Data_Cleaning_Flag[["Importance_internet_access_flag"]] = Importance_internet_access_flag
+
+
+
+
+
 #Importance_reducing_pollution,
 #Importance_recycling_rubbish,
 #Importance_conserving_water,
