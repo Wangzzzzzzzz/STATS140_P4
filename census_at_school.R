@@ -322,6 +322,22 @@ Data_Cleaning_Flag[["Favourite_physical_activity_flag"]] = Favourite_physical_ac
 
 
 
+## Importance_reducing_pollution
+Importance_reducing_pollution = as.numeric(data$Importance_reducing_pollution)
+summary(Importance_reducing_pollution)
+#flag
+Importance_reducing_pollution_flag = rep_len(0L, length.out=length(Importance_reducing_pollution))
+#set all value out of range (0-1000) to have flag 1
+Importance_reducing_pollution_flag[which(Importance_reducing_pollution<0 | Importance_reducing_pollution>1000 | is.na(Importance_reducing_pollution))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_reducing_pollution[which(Importance_reducing_pollution<0 | Importance_reducing_pollution>1000 | is.na(Importance_reducing_pollution))] = NA
+
+Data_Cleaning_Flag[["Importance_reducing_pollution"]] = Importance_reducing_pollution
+Data_Cleaning_Flag[["Importance_reducing_pollution_flag"]] = Importance_reducing_pollution_flag
+
+
+
 
 #Importance_reducing_pollution,
 #Importance_recycling_rubbish,
