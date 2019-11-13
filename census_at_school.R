@@ -244,4 +244,26 @@ Data_Cleaning_Flag[["Travel_to_school_flag"]] = Travel_to_school_flag
 
 
 
+## for travel time to school
+Travel_time_to_school = as.numeric(data$Travel_time_to_school)
+summary(Travel_time_to_school)
+# clean data
+# To make the data in the range (0,1] more reasonable, we replace them with 60 times of themselves
+Travel_time_to_school[which(Travel_time_to_school>0 & Travel_time_to_school<=1)] = 60*Travel_time_to_school[which(Travel_time_to_school>0 & Travel_time_to_school<=1)]
+# Flag
+Travel_time_to_school_flag = rep_len(0L, length.out=length(Travel_time_to_school))
+# range [0,60] flag the data in this range and NAs as 0
+Travel_time_to_school_flag[which(Travel_time_to_school>=0 & Travel_time_to_school<=60)] = 0L
+# Data in the range (60, 120] are extreme outliers and we flag them as 1
+Travel_time_to_school_flag[which(Travel_time_to_school>60 & Travel_time_to_school<=120)] = 1L
+# number larger than 120, flag them as 2.
+Travel_time_to_school_flag[which(Travel_time_to_school>120)] = 2L
+# maybe we should change numbers more than 120 to NA
+Travel_time_to_school[which(Travel_time_to_school>120)] = NA
+
+Data_Cleaning_Flag[["Travel_time_to_school"]] = Travel_time_to_school
+Data_Cleaning_Flag[["Travel_time_to_school_flag"]] = Travel_time_to_school_flag
+
+
+
 
