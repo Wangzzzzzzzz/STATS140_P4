@@ -14,8 +14,8 @@ Data_Cleaning_Flag = list()
 #   1: obvious problem
 #   2: not an obvious problem
 
-# Our group will not change any value of the original data, only using Flag 
-# to indicate if there is a problem with the observation
+# Our group will either using Flag to indicate if there is a problem with the observation
+# or provided a cleaned data column
 
 
 ## Cleaning of the Response ID
@@ -127,7 +127,7 @@ summary(Age)
 # all age below 5 (as one can only go to school after 6) and above 28 to be
 # obviously wrong (10 years older than usual age of the 12th grade)
 # We also take any ages that is above 5 years larger than the median age of a
-# perticular grade to be a problem, as it is unlikely for people to be able to 
+# perticular grade to be a not-so-obvious problem, as it is unlikely for people to be able to 
 # get to a grad 5 years younger or older than others
 Age_grade_median = (data %>% 
                       select(Age_years, ClassGrade) %>%
@@ -138,3 +138,15 @@ Age_flag = ifelse((Age >= 28 | Age <= 5) & !is.na(Age), 1L,
 Data_Cleaning_Flag[["Age_years"]] = data$Age_years
 Data_Cleaning_Flag[["Age_flag"]] = Age_flag
 
+
+## Handed
+table(data$Handed, useNA="always")
+# From the result summary, it is possible to see that the except for one "Question",
+# other entries are valid, so flag is set that all (including NA) are 0 while "Question"
+# is 1
+Handed_flag = ifelse(data$Handed == "Question" & !is.na(data$Handed), 1 ,0)
+Data_Cleaning_Flag[["Handed"]] = data$Handed
+Data_Cleaning_Flag[["Handed_flag"]] = Handed_flag
+
+
+## Height
