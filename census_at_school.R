@@ -337,19 +337,50 @@ Data_Cleaning_Flag[["Importance_reducing_pollution"]] = Importance_reducing_poll
 Data_Cleaning_Flag[["Importance_reducing_pollution_flag"]] = Importance_reducing_pollution_flag
 
 
+## Importance_recycling_rubbish
+Importance_recycling_rubbish = as.numeric(data$Importance_recycling_rubbish)
+summary(Importance_recycling_rubbish)
+#flag
+Importance_recycling_rubbish_flag = rep_len(0L, length.out=length(Importance_recycling_rubbish))
+#set all value out of range (0-1000) to have flag 1
+Importance_recycling_rubbish_flag[which(Importance_recycling_rubbish<0 | Importance_recycling_rubbish>1000 | is.na(Importance_recycling_rubbish))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_recycling_rubbish[which(Importance_recycling_rubbish<0 | Importance_recycling_rubbish>1000 | is.na(Importance_recycling_rubbish))] = NA
+
+Data_Cleaning_Flag[["Importance_recycling_rubbish"]] = Importance_recycling_rubbish
+Data_Cleaning_Flag[["Importance_recycling_rubbish_flag"]] = Importance_recycling_rubbish_flag
+
+
+## Importance_conserving_water
+Importance_conserving_water = as.numeric(data$Importance_conserving_water)
+summary(Importance_conserving_water)
+#flag
+Importance_conserving_water_flag = rep_len(0L, length.out=length(Importance_conserving_water))
+#set all value out of range (0-1000) to have flag 1
+Importance_conserving_water_flag[which(Importance_conserving_water<0 | Importance_conserving_water>1000 | is.na(Importance_conserving_water))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_conserving_water[which(Importance_conserving_water<0 | Importance_conserving_water>1000 | is.na(Importance_conserving_water))] = NA
+
+Data_Cleaning_Flag[["Importance_conserving_water"]] = Importance_conserving_water
+Data_Cleaning_Flag[["Importance_conserving_water_flag"]] = Importance_conserving_water_flag
 
 
 
+## Importance_saving_energy
+Importance_saving_energy = as.numeric(data$Importance_saving_energy)
+summary(Importance_saving_energy)
+#flag
+Importance_saving_energy_flag = rep_len(0L, length.out=length(Importance_saving_energy))
+#set all value out of range (0-1000) to have flag 1
+Importance_saving_energy_flag[which(Importance_saving_energy<0 | Importance_saving_energy>1000 | is.na(Importance_saving_energy))] = 1L
+# clean data
+# we would consider range (0-1000) to be good values
+Importance_saving_energy[which(Importance_saving_energy<0 | Importance_saving_energy>1000 | is.na(Importance_saving_energy))] = NA
 
-
-
-
-
-
-
-
-
-
+Data_Cleaning_Flag[["Importance_saving_energy"]] = Importance_saving_energy
+Data_Cleaning_Flag[["Importance_saving_energy_flag"]] = Importance_saving_energy_flag
 
 
 
@@ -381,40 +412,3 @@ Importance_internet_access[which(Importance_internet_access<0 | Importance_inter
 
 Data_Cleaning_Flag[["Importance_internet_access"]] = Importance_internet_access
 Data_Cleaning_Flag[["Importance_internet_access_flag"]] = Importance_internet_access_flag
-
-
-
-
-
-#Importance_reducing_pollution,
-#Importance_recycling_rubbish,
-#Importance_conserving_water,
-#Importance_saving_energy,
-#Importance_owning_computer,
-#Importance_internet_access
-
-importance_function = function(variable, option = 1){
-flag = rep(0, length(variable))
-var_new = variable
-combo = cbind.data.frame(variable, flag, var_new)
-for(i in (1:length(variable))){
-  if(is.na(variable[i]) == F){
-    if(variable[i] > 1000 | variable[i] < 0){
-      combo$flag[i] = 1
-      combo$var_new[i] = NA
-    }
-  }
-}
-if(option == 1){
-  return(combo$flag)
-}
-else if(option == 2){
-  return(combo$var_new)
-}
-}
-Census$flag_importance_reducing_pollution = importance_function(Census$Importance_reducing_pollution, option = 1)
-Census$flag_importance_recycling_rubbish = importance_function(Census$Importance_recycling_rubbish, option = 1)
-Census$flag_importance_conserving_water = importance_function(Census$Importance_conserving_water, option = 1)
-Census$flag_importance_saving_energy = importance_function(Census$Importance_saving_energy, option = 1)
-Census$flag_importance_owning_computer = importance_function(Census$Importance_owning_computer, option = 1)
-Census$flag_importance_internet_access = importance_function(Census$Importance_internet_access, option = 1)
