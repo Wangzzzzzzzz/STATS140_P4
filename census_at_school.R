@@ -300,3 +300,36 @@ Score_in_memory_game[which(Score_in_memory_game<2.02 | Score_in_memory_game>96)]
 
 Data_Cleaning_Flag[["Score_in_memory_game"]] = Score_in_memory_game
 Data_Cleaning_Flag[["Score_in_memory_game_flag"]] = Score_in_memory_game_flag
+
+#Importance_reducing_pollution,
+#Importance_recycling_rubbish,
+#Importance_conserving_water,
+#Importance_saving_energy,
+#Importance_owning_computer,
+#Importance_internet_access
+
+importance_function = function(variable, option = 1){
+flag = rep(0, length(variable))
+var_new = variable
+combo = cbind.data.frame(variable, flag, var_new)
+for(i in (1:length(variable))){
+  if(is.na(variable[i]) == F){
+    if(variable[i] > 1000 | variable[i] < 0){
+      combo$flag[i] = 1
+      combo$var_new[i] = NA
+    }
+  }
+}
+if(option == 1){
+  return(combo$flag)
+}
+else if(option == 2){
+  return(combo$var_new)
+}
+}
+Census$flag_importance_reducing_pollution = importance_function(Census$Importance_reducing_pollution, option = 1)
+Census$flag_importance_recycling_rubbish = importance_function(Census$Importance_recycling_rubbish, option = 1)
+Census$flag_importance_conserving_water = importance_function(Census$Importance_conserving_water, option = 1)
+Census$flag_importance_saving_energy = importance_function(Census$Importance_saving_energy, option = 1)
+Census$flag_importance_owning_computer = importance_function(Census$Importance_owning_computer, option = 1)
+Census$flag_importance_internet_access = importance_function(Census$Importance_internet_access, option = 1)
