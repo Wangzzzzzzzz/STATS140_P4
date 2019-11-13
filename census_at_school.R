@@ -412,3 +412,7 @@ Importance_internet_access[which(Importance_internet_access<0 | Importance_inter
 
 Data_Cleaning_Flag[["Importance_internet_access"]] = Importance_internet_access
 Data_Cleaning_Flag[["Importance_internet_access_flag"]] = Importance_internet_access_flag
+
+
+## output our Data_Cleaning_Flag！！！！Yeaaaaaa！！！！
+Data_Cleaning_Flag
