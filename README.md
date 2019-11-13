@@ -16,5 +16,4 @@ which i didn't do as i don't have other two's infos, let's see if we need to do 
 | Importance_recycling_rubbish | Numeric range | set all value out of range (0-1000) to have flag 1 |
 | Importance_conserving_water | Numeric range | set all value out of range (0-1000) to have flag 1 |
 | Importance_saving_energy | Numeric range | set all value out of range (0-1000) to have flag 1 |
-| Importance_owning_computer | Numeric range | set all value out of range (0-1000) to have flag 1 |
 | Importance_internet_access | Numeric range | set all value out of range (0-1000) to have flag 1 |
