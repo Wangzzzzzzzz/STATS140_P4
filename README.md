@@ -13,7 +13,6 @@ which i didn't do as i don't have other two's infos, let's see if we need to do 
 
 | Name | Type | Possible ways to clean |
 | ---- | ---- | -------- |
-| Travel_time_to_school | Numeric | ??????? |
 | Reaction_time | Numeric | ??????? |
 | Score_in_memory_game | Numeric | ??????? |
 | Favourite_physical_activity | Categoric | set everything out of range to have flag 1 |
