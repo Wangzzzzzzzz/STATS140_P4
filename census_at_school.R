@@ -1,3 +1,9 @@
+# Project 4, Census At School Data Cleaning
+# Team 18
+# Members:
+# 1pm: Joy Wang
+# 4pm: Wenxin Zhou, Zheng Wang, Jinyi Li, Xinyi Wang, Chengcheng Xu
+
 suppressWarnings(suppressPackageStartupMessages({
   library(readxl)
   library(ggplot2)
@@ -414,5 +420,5 @@ Data_Cleaning_Flag[["Importance_internet_access"]] = Importance_internet_access
 Data_Cleaning_Flag[["Importance_internet_access_flag"]] = Importance_internet_access_flag
 
 
-## output our Data_Cleaning_Flag????????????Yeaaaaaa????????????
+## output our Data_Cleaning_Flag!!!Yeaaaaaa!!!
 Cleaned_Set = data.frame(Data_Cleaning_Flag); View(Cleaned_Set)
